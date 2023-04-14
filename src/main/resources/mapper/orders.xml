@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shop.mtcoding.productapp_v4.model.orders.OrdersRepository">
+
+	<select id="findById"
+		resultType="shop.mtcoding.productapp_v4.model.orders.Orders">
+		SELECT * FROM orders_tb WHERE orders_id=#{ordersId}
+	</select>
+
+	<select id="findAll"
+		resultType="shop.mtcoding.productapp_v4.model.orders.Orders">
+		SELECT *
+		FROM orders_tb 
+		WHERE user_id=#{userId}
+	</select>
+
+	<insert id="insert">
+		INSERT INTO orders_tb (orders_name, orders_price, orders_qty, product_id, user_id, created_at)
+		VALUES(#{ordersDto.ordersName}, #{ordersDto.ordersPrice}, #{ordersDto.ordersQty}, #{ordersDto.productId}, #{userId}, NOW())
+	</insert>
+
+
+	<delete id="deleteById">
+		DELETE FROM orders WHERE id = #{ordersId}
+	</delete>
+
+</mapper>

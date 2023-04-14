@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shop.mtcoding.productapp_v4.model.user.UserRepository">
+
+	<select id="findByUsername"
+		resultType="shop.mtcoding.productapp_v4.model.user.User">
+		SELECT * FROM user_tb WHERE user_name = #{userName}
+	</select>
+
+	<select id="findByUsernameAndPassword"
+		resultType="shop.mtcoding.productapp_v4.model.user.User">
+		SELECT * FROM user_tb WHERE user_name = #{userName} and user_password = #{userPassword}
+	</select>
+
+
+	<select id="findById"
+		resultType="shop.mtcoding.productapp_v4.model.user.User">
+		SELECT * FROM user_tb WHERE user_id = #{userId}
+
+	</select>
+
+	<insert id="insert">
+		INSERT INTO user_tb(user_name, user_password, user_email,
+		created_at)
+		VALUES(#{userName}, #{userPassword}, #{userEmail}, now())
+	</insert>
+
+
+	<select id="findAll"
+		resultType="shop.mtcoding.productapp_v4.model.user.User">
+		SELECT * FROM user_tb ORDER BY user_id DESC
+	</select>
+
+
+	<update id="update">
+		UPDATE user_tb SET user_password = #{userPassword}, user_email =
+		#{userEmail}
+		WHERE user_id = #{userId}
+	</update>
+
+	<delete id="deleteById">
+		DELETE FROM user_tb WHERE user_id = #{userId}
+	</delete>
+
+</mapper>
