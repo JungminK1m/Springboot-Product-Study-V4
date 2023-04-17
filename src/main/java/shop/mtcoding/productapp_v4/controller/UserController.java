@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import shop.mtcoding.productapp_v4.dto.user.AdminLoginDto;
+import shop.mtcoding.productapp_v4.dto.user.LoginDto;
 import shop.mtcoding.productapp_v4.model.user.User;
 import shop.mtcoding.productapp_v4.model.user.UserRepository;
 
@@ -20,6 +21,26 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    // 구매자 로그인
+    @PostMapping("/login")
+    public String login(LoginDto loginDto) {
+        User userPS = userRepository.login(loginDto);
+        if (userPS != null && userPS.getRole().equals("USER")) {
+            session.setAttribute("principal", userPS);
+
+            System.out.println("adminName : " + userPS.getUserName());
+            System.out.println("adminPassword : " + userPS.getUserPassword());
+            System.out.println("user 로그인 성공");
+
+            // 로그인 성공
+            return "redirect:/product";
+
+        }
+        // 로그인 실패
+        return "redirect:/loginForm";
+    }
+
+    // 관리자 로그인
     @PostMapping("/adminLogin")
     public String adminLogin(AdminLoginDto adminLoginDto) {
 
@@ -33,14 +54,15 @@ public class UserController {
             System.out.println("adminPassword : " + userPS.getUserPassword());
             System.out.println("admin 로그인 성공");
 
+            // 로그인 성공
             return "redirect:/product";
         }
-        // 로그인 실패 시
+        // 로그인 실패
         return "redirect:/adminLoginForm";
 
     }
 
-    @GetMapping("/")
+    @GetMapping("/loginForm")
     public String loginForm() {
         return "user/loginForm";
     }
