@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import shop.mtcoding.productapp_v4.dto.user.AdminLoginDto;
 import shop.mtcoding.productapp_v4.dto.user.JoinDto;
 import shop.mtcoding.productapp_v4.dto.user.LoginDto;
 
@@ -23,4 +24,8 @@ public interface UserRepository {
     public void update(User user);
 
     public void delete(Integer userId);
+
+    public User login(LoginDto loginDto);
+
+    public User adminLogin(AdminLoginDto adminLoginDto);
 }

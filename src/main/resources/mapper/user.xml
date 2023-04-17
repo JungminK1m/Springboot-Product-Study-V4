@@ -21,10 +21,27 @@
 
 	</select>
 
+	<!-- 구매자 로그인 -->
+	<!-- 구매자도 role을 적어줘야 구매자 페이지에서 관리자 로그인 시 튕김 -->
+	<select id="login" resultType="shop.mtcoding.productapp_v4.model.user.User">
+		SELECT * FROM user
+		where user_name=#{userName}
+		AND user_password=#{userPassword}
+		AND role ='USER'
+	</select>
+
+	<!-- 관리자 로그인 -->
+	<select id="adminlogin" resultType="shop.mtcoding.productapp_v4.model.user.User">
+		SELECT * FROM user
+		where user_name=#{userName}
+		AND user_password=#{userPassword}
+		AND role = 'ADMIN'
+	</select>
+
 	<insert id="insert">
-		INSERT INTO user_tb(user_name, user_password, user_email,
+		INSERT INTO user_tb(user_name, user_password, user_email, role
 		created_at)
-		VALUES(#{userName}, #{userPassword}, #{userEmail}, now())
+		VALUES(#{userName}, #{userPassword}, #{userEmail}, #{role}, now())
 	</insert>
 
 

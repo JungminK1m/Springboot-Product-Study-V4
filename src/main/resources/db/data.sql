@@ -1,5 +1,5 @@
-INSERT INTO user_tb(user_name, user_password, user_email, created_at) VALUES ('ssar', '1234', 'ssar@nate.com', NOW());
-INSERT INTO user_tb(user_name, user_password, user_email, created_at) VALUES ('cos', '1234', 'cos@nate.com', NOW());
+INSERT INTO user_tb(user_name, user_password, user_email, role, created_at) VALUES ('ssar', '1234', 'ssar@nate.com','ADMIN', NOW());
+INSERT INTO user_tb(user_name, user_password, user_email, role, created_at) VALUES ('cos', '1234', 'cos@nate.com', 'USER', NOW());
 
 INSERT INTO product_tb(product_name, product_price, product_qty, created_at) VALUES('바나나', 3000, 98, NOW());
 INSERT INTO product_tb(product_name, product_price, product_qty, created_at) VALUES('딸기', 2000, 100, NOW());

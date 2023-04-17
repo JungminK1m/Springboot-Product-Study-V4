@@ -3,6 +3,7 @@ CREATE TABLE user_tb(
 	user_name VARCHAR(20) NOT null,
 	user_password VARCHAR(20) NOT null,
 	user_email VARCHAR(20) NOT null,
+	role VARCHAR(20) NOT null,
 	created_at TIMESTAMP NOT null
 );
 
