@@ -14,7 +14,6 @@ import shop.mtcoding.productapp_v4.dto.user.LoginDto;
 import shop.mtcoding.productapp_v4.handler.exception.CustomException;
 import shop.mtcoding.productapp_v4.model.user.User;
 import shop.mtcoding.productapp_v4.model.user.UserRepository;
-import shop.mtcoding.productapp_v4.service.UserService;
 
 @Controller
 public class UserController {
@@ -28,6 +27,16 @@ public class UserController {
     // 구매자 로그인
     @PostMapping("/login")
     public String login(LoginDto loginDto) {
+
+        // 유효성 체크
+        if (loginDto.getUserName().isEmpty()) {
+            throw new CustomException("username을 입력해 주세요.", HttpStatus.BAD_REQUEST);
+        }
+        if (loginDto.getUserPassword().isEmpty()) {
+            throw new CustomException("password를 입력해 주세요.", HttpStatus.BAD_REQUEST);
+        }
+
+        // 가입된 유저인지 확인
         User userPS = userRepository.login(loginDto);
         if (userPS != null && userPS.getRole().equals("USER")) {
             session.setAttribute("principal", userPS);
@@ -42,12 +51,20 @@ public class UserController {
 
         }
         // 로그인 실패
-        return "redirect:/loginForm";
+        throw new CustomException("아이디와 비밀번호를 확인해 주세요", HttpStatus.BAD_REQUEST);
     }
 
     // 관리자 로그인
     @PostMapping("/adminLogin")
     public String adminLogin(AdminLoginDto adminLoginDto) {
+
+        // 유효성 체크
+        if (adminLoginDto.getUserName().isEmpty()) {
+            throw new CustomException("username을 입력해 주세요.", HttpStatus.BAD_REQUEST);
+        }
+        if (adminLoginDto.getUserPassword().isEmpty()) {
+            throw new CustomException("password를 입력해 주세요.", HttpStatus.BAD_REQUEST);
+        }
 
         User userPS = userRepository.adminLogin(adminLoginDto);
 
@@ -75,7 +92,7 @@ public class UserController {
         if (joinDto.getUserName().isEmpty()) {
             throw new CustomException("username을 입력해 주세요.", HttpStatus.BAD_REQUEST);
         }
-        if (joinDto.getUserPassword() == null) {
+        if (joinDto.getUserPassword().isEmpty()) {
             throw new CustomException("password를 입력해 주세요.", HttpStatus.BAD_REQUEST);
         }
         if (joinDto.getUserEmail().isEmpty()) {
