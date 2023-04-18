@@ -5,11 +5,11 @@
             <form action="/adminLogin" method="post" name="form">
             
                 <div class="mb-3 mt-3">
-                    <input type="text" class="form-control" placeholder="username" name="userName" />
+                    <input type="text" class="form-control" placeholder="username" name="userName" value="admin" />
                 </div>
 
                 <div class="mb-3">
-                    <input type="password" class="form-control" placeholder="password" name="userPassword" />
+                    <input type="password" class="form-control" placeholder="password" name="userPassword" value="1234" />
                 </div>
 
                 <button type="submit" class="btn btn-primary">
