@@ -11,7 +11,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${product}" var="p" varStatus="status">
+                    <c:forEach items="${productList}" var="p" varStatus="status">
                         <tr>
                             <td>${status.count}</td>
                             <td><a href="/product/${p.productId}">${p.productName}</a></td>
