@@ -30,6 +30,7 @@ public class UserController {
 
             System.out.println("adminName : " + userPS.getUserName());
             System.out.println("adminPassword : " + userPS.getUserPassword());
+            System.out.println("Role : " + userPS.getRole());
             System.out.println("user 로그인 성공");
 
             // 로그인 성공
@@ -52,6 +53,7 @@ public class UserController {
 
             System.out.println("adminName : " + userPS.getUserName());
             System.out.println("adminPassword : " + userPS.getUserPassword());
+            System.out.println("Role : " + userPS.getRole());
             System.out.println("admin 로그인 성공");
 
             // 로그인 성공
@@ -75,6 +77,13 @@ public class UserController {
     @GetMapping("/adminLoginForm")
     public String adminLoginForm() {
         return "user/adminLoginForm";
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+
+        session.invalidate();
+        return "redirect:/";
     }
 
 }

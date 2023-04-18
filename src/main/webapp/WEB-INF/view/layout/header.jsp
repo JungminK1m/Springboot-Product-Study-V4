@@ -31,27 +31,43 @@
             <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
                 <div class="container-fluid">
                     <h3 style="color: white;">🍌 쇼핑몰 🍓</h3>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapsibleNavbar">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                    
                     <div class="collapse navbar-collapse" id="collapsibleNavbar">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="/productSave">상품등록페이지</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="/product">상품목록페이지</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/orders">주문조회</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/">로그인</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">로그아웃</a>
-                            </li>
+                            <c:choose>
+
+                               <c:when test="${empty principal}">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/loginForm">로그인</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/adminLoginForm">관리자 로그인</a>
+                                </li>
+                               </c:when>
+
+                               <c:when test="${principal.role == 'USER'}" >
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/orders">주문조회</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/logout">로그아웃</a>
+                                </li>
+                               </c:when>
+
+                               <c:otherwise>
+                                <%-- ${principal.role == 'ADMIN'} 일 때 --%>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/productSave">상품등록페이지</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/logout">로그아웃</a>
+                                </li>
+                               </c:otherwise>
+                               
+                            </c:choose>
                         </ul>
                     </div>
                 </div>

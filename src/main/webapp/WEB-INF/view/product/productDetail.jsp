@@ -26,7 +26,14 @@
 
                     <%-- 로그인 했을 때만 구매하기 버튼 뜨게 하기 --%>
                     <c:choose>
-                        <c:when test="${principal != null}">
+
+                        <c:when test="${empty principal}" >
+                            <div class="center" style="margin-top: 40px; text-align: center;">
+                                <h5>상품을 구매하시려면 로그인 해주세요😀</h5>
+                            </div>
+                        </c:when>
+
+                        <c:when test="${principal.role != 'ADMIN'}">
                             <div class="center" style="margin-top: 20px; text-align: center;">
 
                                 수량 :<input name="ordersQty" type="number" min="0" class="form-control mb-3"
@@ -37,8 +44,15 @@
                         </c:when>
 
                         <c:otherwise>
-                            <div class="center" style="margin-top: 40px; text-align: center;">
-                                <h5>상품을 구매하시려면 로그인 해주세요😀</h5>
+                            <div class="center" style="margin-top: 20px; text-align: center;">
+                                <form type="submit" action="/product/${product.productId}/updateForm" method="get">
+                                    <button
+                                        style="width: 240px; height: 50px; margin-right: 20px; background-color: rgb(255, 210, 199);">수정하기</button>
+                                </form>
+                                <form type="submit" action="/product/${product.productId}/delete" method="post">
+                                    <button
+                                        style="width: 240px; height: 50px; margin: auto; background-color: rgb(250, 255, 182);">삭제하기</button>
+                                </form>
                             </div>
                         </c:otherwise>
                     </c:choose>
