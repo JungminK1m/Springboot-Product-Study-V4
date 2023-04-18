@@ -3,7 +3,7 @@
 
         <div class="center">
             <div style="margin: 20px;">
-                <form type="submit" action="/order/${productId}" method="post">
+                <form type="submit" action="/orders/${productId}" method="post">
                     <%-- productName 과 ordersName 연결하기 --%>
                     <input name="ordersId" type="hidden" value="${product.productId}">
                     <input name="ordersName" type="hidden" value="${product.productName}">

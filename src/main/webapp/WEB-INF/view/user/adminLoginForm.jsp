@@ -17,9 +17,7 @@
                 </button>
 
             </form>
-            <button onclick="location.href='/joinForm'" ; class="btn btn-secondary mt-3">
-                관리자 회원가입
-            </button>
+            
          </div>
 
         <%@ include file="../layout/footer.jsp" %>

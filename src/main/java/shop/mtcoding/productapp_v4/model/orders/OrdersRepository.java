@@ -19,5 +19,5 @@ public interface OrdersRepository {
 
     public void orderUpdatebyProductQty(Orders orders);
 
-    public void delete(Integer ordersId);
+    public void deleteById(Integer ordersId);
 }

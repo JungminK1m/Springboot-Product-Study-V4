@@ -28,8 +28,8 @@ public class UserController {
         if (userPS != null && userPS.getRole().equals("USER")) {
             session.setAttribute("principal", userPS);
 
-            System.out.println("adminName : " + userPS.getUserName());
-            System.out.println("adminPassword : " + userPS.getUserPassword());
+            System.out.println("userName : " + userPS.getUserName());
+            System.out.println("userPassword : " + userPS.getUserPassword());
             System.out.println("Role : " + userPS.getRole());
             System.out.println("user 로그인 성공");
 

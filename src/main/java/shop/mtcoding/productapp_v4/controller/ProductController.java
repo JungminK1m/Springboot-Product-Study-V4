@@ -24,10 +24,10 @@ public class ProductController {
         return "product/productList";
     }
 
-    @GetMapping("/product/{id}")
-    public String productDetail(@PathVariable Integer id, Model model) {
+    @GetMapping("/product/{productId}")
+    public String productDetail(@PathVariable Integer productId, Model model) {
 
-        Product product = productRepository.findById(id);
+        Product product = productRepository.findById(productId);
         model.addAttribute("product", product);
 
         return "product/productDetail";
