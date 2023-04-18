@@ -3,7 +3,10 @@
 
         <div class="center">
             <div style="margin: 20px;">
-                <form type="submit" action="/orders/${productId}" method="post">
+
+                <form type="submit" action="/orders/${productId}" method="post" onsubmit="return qtyCheck();>
+
+
                     <%-- productName 과 ordersName 연결하기 --%>
                     <input name="ordersId" type="hidden" value="${product.productId}">
                     <input name="ordersName" type="hidden" value="${product.productName}">
@@ -20,12 +23,14 @@
                         </tr>
                         <tr style="border: 1px solid">
                             <th style="background-color: rgb(185, 185, 185)">상품명</th>
-                            <td>${product.productQty}개</td>
+                            <td>
+                                <span id="productQty">${product.productQty}</span>
+                                <span>개</span>
+                            </td>
                         </tr>
                     </table>
 
                     <c:choose>
-
                         <%-- 로그인 했을 때만 구매하기 버튼 뜨게 하기 --%>
                         <c:when test="${empty principal}" >
                             <div class="center" style="margin-top: 40px; text-align: center;">
@@ -33,7 +38,7 @@
                             </div>
                         </c:when>
 
-                        <%-- ADMIN 아닐 때(USER일 때)는 구매하기 버튼 뜨게 하기 --%>
+                        <%-- USER일 때는 구매하기 버튼 뜨게 하기 --%>
                         <c:when test="${principal.role == 'USER'}">
                             <div class="center" style="margin-top: 20px; text-align: center;">
 
@@ -43,24 +48,58 @@
                                     style="width: 240px; height: 50px; margin-right: 20px; background-color: rgb(255, 210, 199);">구매하기</button>
                             </div>
                         </c:when>
+                    </c:choose>
+                </form>
 
                         <%-- ADMIN일 때는 수정하기/삭제하기 버튼 뜨게 하기 --%>
-                        <c:otherwise>
+                        <c:if test="${principal.role == 'ADMIN'}">
                             <div class="center" style="margin-top: 20px; text-align: center;">
-                                <form type="submit" action="/product/${product.productId}/updateForm" method="get">
+                                <form action="/product/${product.productId}/updateForm" method="get">
                                     <button
                                         style="width: 240px; height: 50px; margin-right: 20px; background-color: rgb(255, 210, 199);">수정하기</button>
                                 </form>
-                                <form type="submit" action="/product/${product.productId}/delete" method="post">
+                                <form action="/product/${product.productId}/delete" method="post">
                                     <button
                                         style="width: 240px; height: 50px; margin: auto; background-color: rgb(250, 255, 182);">삭제하기</button>
                                 </form>
                             </div>
-                        </c:otherwise>
-                    </c:choose>
-                </form>
-
+                        </c:if>
 
             </div>
         </div>
+
+        <script>
+            function qtyCheck() {
+                let ordersQty = parseInt(document.getElementsByName("ordersQty")[0].value); // 주문수량 150
+                let productQty = parseInt(document.getElementById("productQty")); //재고수량 95
+
+                <%-- 반복 코드 줄이기 위해 return false; 를 변수화 --%>
+                let ret = false
+
+                console.log("orderQty : " + ordersQty);
+                console.log("productQty : " + productQty);
+
+                <%-- 주문 수량이 undefined인지 여부 --%> 
+                if (ordersQty && productQty) {
+                    // 주문수량이 존재함
+                    // 주문수량 > 재고
+                    if (ordersQty > productQty) {
+                        alert("재고 수량을 초과하여 구매할 수 없습니다.");
+                        
+                    }
+                    <%-- 주문수량 = 0 or 주문수량 < 0 --%> 
+                    else if (ordersQty < 1) {
+                        alert("1개 이상 구매할 수 있습니다.");
+                    }
+                    <%-- 그게 아니라면 true로 반환 !ret 이니까 true임 --%> 
+                    else {
+                        ret = !ret;
+                    }
+                } else {
+                    <%-- 주문수량이 undefined임 --%> 
+                    alert("주문수량을 입력해 주세요.");
+                }
+                return ret;
+            }
+        </script>
     <%@ include file="../layout/footer.jsp" %>

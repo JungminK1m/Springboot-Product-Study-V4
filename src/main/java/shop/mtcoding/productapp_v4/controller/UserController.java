@@ -3,14 +3,18 @@ package shop.mtcoding.productapp_v4.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import shop.mtcoding.productapp_v4.dto.user.AdminLoginDto;
+import shop.mtcoding.productapp_v4.dto.user.JoinDto;
 import shop.mtcoding.productapp_v4.dto.user.LoginDto;
+import shop.mtcoding.productapp_v4.handler.exception.CustomException;
 import shop.mtcoding.productapp_v4.model.user.User;
 import shop.mtcoding.productapp_v4.model.user.UserRepository;
+import shop.mtcoding.productapp_v4.service.UserService;
 
 @Controller
 public class UserController {
@@ -62,6 +66,33 @@ public class UserController {
         // 로그인 실패
         return "redirect:/adminLoginForm";
 
+    }
+
+    @PostMapping("/join")
+    public String join(JoinDto joinDto) {
+
+        // 유효성 체크
+        if (joinDto.getUserName().isEmpty()) {
+            throw new CustomException("username을 입력해 주세요.", HttpStatus.BAD_REQUEST);
+        }
+        if (joinDto.getUserPassword() == null) {
+            throw new CustomException("password를 입력해 주세요.", HttpStatus.BAD_REQUEST);
+        }
+        if (joinDto.getUserEmail().isEmpty()) {
+            throw new CustomException("email을 입력해 주세요.", HttpStatus.BAD_REQUEST);
+        }
+
+        // 기존 동일 유저 확인 (username,email만)
+        if (userRepository.findByUserName(joinDto.getUserName()) != null) {
+            throw new CustomException("이미 가입된 유저입니다.", HttpStatus.BAD_REQUEST);
+        }
+        if (userRepository.findByUserEmail(joinDto.getUserEmail()) != null) {
+            throw new CustomException("이미 가입된 이메일입니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        userRepository.insert(joinDto);
+
+        return "redirect:/loginForm";
     }
 
     @GetMapping("/loginForm")

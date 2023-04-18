@@ -23,7 +23,7 @@
 
 
 	<delete id="deleteById">
-		DELETE FROM orders WHERE id = #{ordersId}
+		DELETE FROM orders_tb WHERE orders_id = #{ordersId}
 	</delete>
 
 </mapper>

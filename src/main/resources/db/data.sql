@@ -4,6 +4,9 @@ INSERT INTO user_tb(user_name, user_password, user_email, role, created_at) VALU
 
 INSERT INTO product_tb(product_name, product_price, product_qty, created_at) VALUES('바나나', 3000, 98, NOW());
 INSERT INTO product_tb(product_name, product_price, product_qty, created_at) VALUES('딸기', 2000, 100, NOW());
+INSERT INTO product_tb(product_name, product_price, product_qty, created_at) VALUES('키위', 4000, 85, NOW());
+INSERT INTO product_tb(product_name, product_price, product_qty, created_at) VALUES('오렌지', 3500, 50, NOW());
+INSERT INTO product_tb(product_name, product_price, product_qty, created_at) VALUES('사과', 1000, 200, NOW());
 
 INSERT INTO orders_tb(orders_name, orders_price, orders_qty, product_id, user_id, created_at) VALUES ('바나나', 3000, 2, 1, 1, NOW());
 INSERT INTO orders_tb(orders_name, orders_price, orders_qty, product_id, user_id, created_at)  VALUES ('딸기', 2000, 5, 2, 2, NOW());

@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ include file="../layout/header.jsp" %>
     
-        <form action="/join" method="post" name="form" contenttyp>
+    <div class="container">
+        <form action="/join" method="post" name="form">
                 <div class="mb-3 mt-3">
                     <input
                         type="text"
@@ -33,6 +34,6 @@
                     회원가입
                 </button>
             </form>
-        </div>
+    </div>
 
     <%@ include file="../layout/footer.jsp" %>

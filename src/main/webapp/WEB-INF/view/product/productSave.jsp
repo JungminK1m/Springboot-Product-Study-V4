@@ -4,17 +4,17 @@
         <div class="container">
             <form action="/product/save" method="post">
                 <div class="mb-3 mt-3">
-                    상품명 : <input id="name" name="name" type="text" placeholder="상품명을 적어주세요">
+                    상품명 : <input id="name" name="productName" type="text" placeholder="상품명을 적어주세요">
                     <button id="CheckproductName" type="button">중복확인</button>
 
                 </div>
 
                 <div class="mb-3 mt-3">
-                    상품가격 : <input id="price" name="price" type="text" placeholder="상품 가격을 적어주세요">
+                    상품가격 : <input id="price" name="productPrice" type="text" placeholder="상품 가격을 적어주세요">
                 </div>
 
                 <div class="mb-3 mt-3">
-                    상품수량 : <input id="qty" name="qty" type="text" placeholder="상품 수량을 적어주세요">
+                    상품수량 : <input id="qty" name="productQty" type="text" placeholder="상품 수량을 적어주세요">
                 </div>
 
                 <button id="submit" type="submit" class="btn btn-primary">상품등록완료</button>
@@ -30,7 +30,7 @@
             $('#CheckproductName').on('click', function () {
 
                 // 이렇게 데이터를 변수로 만들면 보기가 편하다
-                let data = { name: $('#name').val() }
+                let data = { productName: $('#name').val() }
 
                 $.ajax({
                     url: '/productSave/checkName/',
@@ -42,6 +42,7 @@
                     alert("등록 가능한 상품입니다")
                     // 콘솔창 확인용
                     console.log(res);
+                    console.log("sameCheck : " + sameCheck);
                     // 등록 가능하니까 체크 여부를 true로 변경
                     sameCheck = true;
 
@@ -49,6 +50,7 @@
                     alert("이미 등록한 상품입니다")
                     // 콘솔창 확인용
                     console.log(err);
+                    console.log("sameCheck : " + sameCheck);
                     // 등록 불가이기 때문에 중복체크를 안한 것으로 설정 (아래에 이벤트 처리를 위해)
                     sameCheck = false;
                 });
