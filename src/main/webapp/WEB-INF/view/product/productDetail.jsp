@@ -4,7 +4,7 @@
         <div class="center">
             <div style="margin: 20px;">
 
-                <form type="submit" action="/orders/${productId}" method="post" onsubmit="return qtyCheck();>
+                <form type="submit" action="/orders/${productId}" method="post" onsubmit="return qtyCheck()";>
 
 
                     <%-- productName 과 ordersName 연결하기 --%>
@@ -73,30 +73,29 @@
                 let ordersQty = parseInt(document.getElementsByName("ordersQty")[0].value); // 주문수량 150
                 let productQty = parseInt(document.getElementById("productQty")); //재고수량 95
 
-                <%-- 반복 코드 줄이기 위해 return false; 를 변수화 --%>
-                let ret = false
+                // 반복 코드 줄이기 위해 return false; 를 변수화
+                let ret = false;
 
                 console.log("orderQty : " + ordersQty);
                 console.log("productQty : " + productQty);
 
-                <%-- 주문 수량이 undefined인지 여부 --%> 
-                if (ordersQty && productQty) {
+                // 주문 수량이 undefined인지 여부
+                if (!isNaN(ordersQty) && !isNaN(productQty)) {
                     // 주문수량이 존재함
                     // 주문수량 > 재고
                     if (ordersQty > productQty) {
                         alert("재고 수량을 초과하여 구매할 수 없습니다.");
-                        
                     }
-                    <%-- 주문수량 = 0 or 주문수량 < 0 --%> 
-                    else if (ordersQty < 1) {
+                    // 주문수량 = 0 or 주문수량 < 0
+                    else if (ordersQty === 0 || ordersQty < 0) {
                         alert("1개 이상 구매할 수 있습니다.");
                     }
-                    <%-- 그게 아니라면 true로 반환 !ret 이니까 true임 --%> 
+                    // 그게 아니라면 true로 반환 !ret 이니까 true임
                     else {
                         ret = !ret;
                     }
                 } else {
-                    <%-- 주문수량이 undefined임 --%> 
+                    // 주문수량이 undefined임
                     alert("주문수량을 입력해 주세요.");
                 }
                 return ret;

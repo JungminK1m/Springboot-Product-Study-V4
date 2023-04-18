@@ -3,7 +3,6 @@ package shop.mtcoding.productapp_v4.model.product;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import shop.mtcoding.productapp_v4.dto.orders.OrdersDto;
 import shop.mtcoding.productapp_v4.dto.product.ProductReqDto.ProductSaveDto;
