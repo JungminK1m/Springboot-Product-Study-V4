@@ -34,11 +34,15 @@
                     
                     <div class="collapse navbar-collapse" id="collapsibleNavbar">
                         <ul class="navbar-nav">
+
+                            <%-- 공통 헤더 --%>
                             <li class="nav-item">
                                 <a class="nav-link" href="/product">상품목록페이지</a>
                             </li>
+                            
                             <c:choose>
 
+                               <%-- 로그인 하지 않았을 때 헤더 --%>
                                <c:when test="${empty principal}">
                                 <li class="nav-item">
                                     <a class="nav-link" href="/loginForm">로그인</a>
@@ -48,6 +52,7 @@
                                 </li>
                                </c:when>
 
+                               <%-- USER로 로그인 했을 때 헤더 --%>
                                <c:when test="${principal.role == 'USER'}" >
                                 <li class="nav-item">
                                     <a class="nav-link" href="/orders">주문조회</a>
@@ -57,8 +62,9 @@
                                 </li>
                                </c:when>
 
+
+                               <%-- ${principal.role == 'ADMIN'} 일 때 헤더 --%>
                                <c:otherwise>
-                                <%-- ${principal.role == 'ADMIN'} 일 때 --%>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/productSave">상품등록페이지</a>
                                 </li>
@@ -66,7 +72,7 @@
                                     <a class="nav-link" href="/logout">로그아웃</a>
                                 </li>
                                </c:otherwise>
-                               
+
                             </c:choose>
                         </ul>
                     </div>

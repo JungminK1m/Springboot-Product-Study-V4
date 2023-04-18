@@ -24,16 +24,17 @@
                         </tr>
                     </table>
 
-                    <%-- 로그인 했을 때만 구매하기 버튼 뜨게 하기 --%>
                     <c:choose>
 
+                        <%-- 로그인 했을 때만 구매하기 버튼 뜨게 하기 --%>
                         <c:when test="${empty principal}" >
                             <div class="center" style="margin-top: 40px; text-align: center;">
                                 <h5>상품을 구매하시려면 로그인 해주세요😀</h5>
                             </div>
                         </c:when>
 
-                        <c:when test="${principal.role != 'ADMIN'}">
+                        <%-- ADMIN 아닐 때(USER일 때)는 구매하기 버튼 뜨게 하기 --%>
+                        <c:when test="${principal.role == 'USER'}">
                             <div class="center" style="margin-top: 20px; text-align: center;">
 
                                 수량 :<input name="ordersQty" type="number" min="0" class="form-control mb-3"
@@ -43,6 +44,7 @@
                             </div>
                         </c:when>
 
+                        <%-- ADMIN일 때는 수정하기/삭제하기 버튼 뜨게 하기 --%>
                         <c:otherwise>
                             <div class="center" style="margin-top: 20px; text-align: center;">
                                 <form type="submit" action="/product/${product.productId}/updateForm" method="get">
