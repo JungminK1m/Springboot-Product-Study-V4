@@ -88,7 +88,7 @@ public class OrdersController {
     }
 
     @PostMapping("/ordersList/delete")
-    public String deleteOrder(Integer ordersId, Integer productId) {
+    public String deleteOrder(Integer ordersId) {
 
         // 로그인 한 사람만
         User principal = (User) session.getAttribute("principal");
@@ -97,15 +97,6 @@ public class OrdersController {
         }
 
         int userId = principal.getUserId();
-
-        System.out.println("userId : " + userId);
-
-        // productRepository.findById(productId);
-        // System.out.println("productId : " + productId);
-
-        // 구매 취소했으니 다시 product Qty 업데이트
-        // productRepository.productQtyReupdate(ordersDto);
-        // System.out.println("재고 : " + ordersDto.getOrdersQty());
 
         Orders orders = ordersRepository.findById(ordersId);
         productRepository.productQtyReupdate(orders);

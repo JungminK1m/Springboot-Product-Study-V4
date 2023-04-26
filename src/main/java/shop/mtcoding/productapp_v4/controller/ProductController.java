@@ -88,11 +88,6 @@ public class ProductController {
         // 새로운 상품 등록(insert)
         int result = productRepository.insert(productSaveDto);
 
-        // 디버깅
-        System.out.println("상품 이름 : " + productSaveDto.getProductName());
-        System.out.println("상품 가격 : " + productSaveDto.getProductPrice());
-        System.out.println("상품 재고 : " + productSaveDto.getProductQty());
-
         // result 가 1이 아니면 업데이트 안된 것
         if (result != 1) {
             throw new CustomException("상품 등록을 실패했습니다.", HttpStatus.BAD_REQUEST);
@@ -104,6 +99,12 @@ public class ProductController {
     // 상품명 중복체크 컨트롤러
     @PostMapping("/productSave/checkName")
     public ResponseEntity<?> checkProductName(@RequestParam String productName) {
+
+        // 관리자 로그인 한 사람만 상품 수정 가능
+        User principal = (User) session.getAttribute("principal");
+        if (principal == null || !principal.getRole().equals("ADMIN")) {
+            throw new CustomException("관리자 로그인을 먼저 해 주세요.", HttpStatus.FORBIDDEN);
+        }
 
         // 디버깅
         System.out.println("productName : " + productName);
@@ -141,47 +142,44 @@ public class ProductController {
     @PostMapping("/product/{productId}/update")
     public String update(@PathVariable Integer productId, Model model, ProductUpdateDto productUpdateDto) {
 
-        System.out.println("디버깅 : " + productId);
+        // 관리자 로그인 한 사람만 상품 수정 가능
+        User principal = (User) session.getAttribute("principal");
+        if (principal == null || !principal.getRole().equals("ADMIN")) {
+            throw new CustomException("관리자 로그인을 먼저 해 주세요.", HttpStatus.FORBIDDEN);
+        }
+
         Product p = productRepository.findById(productId);
         model.addAttribute("product", p);
-
-        // 테스트
-        System.out.println("p 아이디: " + p.getProductId());
-        System.out.println("p 이름: " + p.getProductName());
-        System.out.println("p 가격: " + p.getProductPrice());
-        System.out.println("p 재고: " + p.getProductQty());
 
         Product product = new Product();
         product.setProductId(productUpdateDto.getProductId());
         product.setProductName(productUpdateDto.getProductName());
         product.setProductPrice(productUpdateDto.getProductPrice());
         product.setProductQty(productUpdateDto.getProductQty());
-        System.out.println("데이터 담음");
 
         // 업데이트
         int result = productRepository.update(product);
-
-        // 테스트
-        System.out.println("product 아이디: " + product.getProductId());
-        System.out.println("product 이름: " + product.getProductName());
-        System.out.println("product 가격: " + product.getProductPrice());
-        System.out.println("product 재고: " + product.getProductQty());
-
-        System.out.println("result : " + result);
 
         if (result != 1) {
             System.out.println("업데이트 실패");
             throw new CustomException("업데이트 실패", HttpStatus.BAD_REQUEST);
         }
-        System.out.println("업데이트 완료");
 
+        // 업데이트 완료
         return "redirect:/product/" + productId;
     }
 
     // 상품 삭제
-    @PostMapping("/product/{ProductId}/delete")
-    public String delete(@PathVariable Integer ProductId) {
-        int result = productRepository.deleteById(ProductId);
+    @PostMapping("/product/{productId}/delete")
+    public String delete(@PathVariable Integer productId) {
+
+        // 관리자 로그인 한 사람만 상품 삭제 가능
+        User principal = (User) session.getAttribute("principal");
+        if (principal == null || !principal.getRole().equals("ADMIN")) {
+            throw new CustomException("관리자 로그인을 먼저 해 주세요.", HttpStatus.FORBIDDEN);
+        }
+
+        int result = productRepository.deleteById(productId);
         if (result != 1) {
             throw new CustomException("삭제 실패", HttpStatus.BAD_REQUEST);
         }
